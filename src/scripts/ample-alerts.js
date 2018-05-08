@@ -46,7 +46,7 @@ function closeAlert(alertDom) {
     }, 1000);
 }
 
-export function alert(...args) {
+function alert(...args) {
     var text = getText(args[0]),
         headerText = text[0],
         bodyText = text[1],
@@ -76,7 +76,7 @@ export function alert(...args) {
     }, 50);
 }
 
-export function confirm(...args) {
+function confirm(...args) {
     var text = getText(args[0]),
         headerText = text[0],
         bodyText = text[1],
@@ -123,6 +123,12 @@ export function confirm(...args) {
     }, 50);
 }
 
-export function prompt() {
+function prompt() {
     console.error('Not yet implemented');
 }
+
+export {
+    alert,
+    confirm,
+    prompt
+};
