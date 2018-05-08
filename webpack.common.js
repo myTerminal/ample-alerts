@@ -85,6 +85,7 @@ module.exports = {
         filename: 'scripts/' + libraryFileName + '.js',
         path: path.resolve(__dirname, outputDir),
         library: libraryName,
+        libraryExport: 'default',
         libraryTarget: 'umd',
         umdNamedDefine: true
     }
