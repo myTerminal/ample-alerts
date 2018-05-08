@@ -1,4 +1,4 @@
-/* global document */
+/* global document setTimeout */
 
 import '../styles/ample-alerts.less';
 
@@ -23,10 +23,10 @@ function createAlertBody(bodyText) {
     </div>`;
 }
 
-function createAlertControls(controls) {
+function createAlertControls(controlLabels) {
     return `<div class="ample-alert-controls">
-        <div class="ample-alert-control">Yes</div>
-        <div class="ample-alert-control">No</div>
+        <div class="ample-alert-control">${(controlLabels && controlLabels[0]) || 'Yes'}</div>
+        <div class="ample-alert-control">${(controlLabels && controlLabels[1]) || 'No'}</div>
     </div>`;
 }
 
@@ -57,7 +57,6 @@ export function alert(...args) {
     currentAlert.className = 'ample-alert alert';
     currentAlert.innerHTML = createAlertHeader(headerText, true)
         + createAlertBody(bodyText)
-        + createAlertControls()
         + '<div class="clear-fix"></div>';
 
     defaults.container.appendChild(currentAlert);
@@ -77,10 +76,53 @@ export function alert(...args) {
     }, 50);
 }
 
-export function confirm() {
+export function confirm(...args) {
+    var text = getText(args[0]),
+        headerText = text[0],
+        bodyText = text[1],
+        onAction = args[1],
+        controlLabels = args[2],
+        controls,
+        respondWithYes,
+        respondWithNo,
+        currentAlert;
 
+    currentAlert = document.createElement('div');
+    currentAlert.className = 'ample-alert confirm';
+    currentAlert.innerHTML = createAlertHeader(headerText, true)
+        + createAlertBody(bodyText)
+        + createAlertControls(controlLabels)
+        + '<div class="clear-fix"></div>';
+
+    defaults.container.appendChild(currentAlert);
+
+    respondWithYes = function () {
+        if (onAction) {
+            onAction(true);
+        }
+
+        closeAlert(currentAlert);
+    };
+
+    respondWithNo = function () {
+        if (onAction) {
+            onAction(false);
+        }
+
+        closeAlert(currentAlert);
+    };
+
+    controls = currentAlert.querySelectorAll('.ample-alert-control');
+
+    currentAlert.querySelector('.ample-alert-close').onclick = respondWithNo;
+    controls[0].onclick = respondWithYes;
+    controls[1].onclick = respondWithNo;
+
+    setTimeout(function () {
+        currentAlert.className += ' visible';
+    }, 50);
 }
 
 export function prompt() {
-
+    console.error('Not yet implemented');
 }

@@ -11,7 +11,7 @@
 [![License](https://img.shields.io/github/license/myTerminal/ample-alerts.svg)](https://opensource.org/licenses/MIT)  
 [![NPM](https://nodei.co/npm/ample-alerts.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ample-alerts/)
 
-A simple alerts library for web [in progress]
+A simple alerts library for web
 
 ## Features
 
@@ -33,7 +33,7 @@ One can use *ample-alerts* directly from a web-page by attaching the *ample-aler
     
     <!-- Usage -->
     <script type="text/javascript">
-        ampleAlerts.alert('This is a sample alert');
+        ampleAlerts.alert(['Update Available', 'A new update is available'], { autoClose: 3000 });
     </script>
 
 ### With Browserify or Webpack
@@ -101,7 +101,7 @@ You can also specify labels for buttons.
 
     ampleAlerts.confirm(['Update Available', 'Do you want to load the latest version?'], onAction, ['Sure', 'Not now']);
 
-#### Prompt (Not Implemented)
+#### Prompt (Still to be implemented)
 
 Shows a prompt to ask a value from the user.
 
