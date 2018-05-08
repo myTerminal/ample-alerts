@@ -36,12 +36,14 @@ body {
             border: 1px solid #ccc;
             padding: 5px;
             margin-bottom: 5px;
+            margin-left: 100%;
             .round-borders(5px);
             .opacity(0);
             .transition(1s);
 
             &.visible {
                 .opacity(0.8);
+                margin-left: 0;
             }
 
             &:hover {
@@ -59,11 +61,12 @@ body {
 
                 .ample-alert-header-text {
                     display: inline-block;
-                    margin-bottom: 5px;
+                    margin-bottom: 10px;
                 }
 
                 .ample-alert-close {
                     float: right;
+                    margin: 3px;
                     font-weight: normal;
                     cursor: pointer;
                     line-height: 12px;
@@ -80,7 +83,7 @@ body {
             }
 
             .ample-alert-controls {
-                margin-top: 5px;
+                margin-top: 15px;
 
                 .ample-alert-control {
                     cursor: pointer;
@@ -97,6 +100,39 @@ body {
                     &:hover {
                         border-color: #fff;
                         color: #fff;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 640px) {
+
+        #ample-alerts-container {
+            width: 90%;
+            margin: 5%;
+
+            .ample-alert {
+
+                .ample-alert-header {
+
+                    .ample-alert-header-text {
+
+                    }
+
+                    .ample-alert-close {
+
+                    }
+
+                    .ample-alert-body {
+
+                    }
+
+                    .ample-alert-controls {
+
+                        .ample-alert-control {
+
+                        }
                     }
                 }
             }

@@ -11,11 +11,12 @@
 [![License](https://img.shields.io/github/license/myTerminal/ample-alerts.svg)](https://opensource.org/licenses/MIT)  
 [![NPM](https://nodei.co/npm/ample-alerts.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ample-alerts/)
 
-A simple alerts library for web
+A simple alert library for web
 
 ## Features
 
 * A simple & light-weight alert library
+* Mobile-friendly
 * Supports multiple types of alerts
 * Can be easily themed for any host web application
 
