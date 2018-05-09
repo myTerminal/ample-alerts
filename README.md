@@ -37,42 +37,43 @@ One can use *ample-alerts* directly from a web-page by attaching the *ample-aler
         ampleAlerts.alert(['Update Available', 'A new update is available'], { autoClose: 3000 });
     </script>
 
-### With Browserify or Webpack
+### With [Webpack](https://webpack.js.org), [Browserify](http://browserify.org) or [RequireJS](http://requirejs.org)
 
-One can use *ample-alerts* with [Browserify](http://browserify.org) or [Webpack](https://webpack.js.org).
-
-Install *ample-alerts* from Npm
+Install *ample-alerts* from NPM
 
     npm install ample-alerts --save-dev
 
-#### With Browserify
+Consume as an ES6 module
+
+    import * as ampleAlerts from 'ample-alerts';
+
+or
+
+    import { alert, confirm, prompt } from 'ample-alerts';
+
+Consume as a CommonJS module
 
     var AmpleAlerts = require('ample-alerts');
 
-The above will let you use the scripts but you will have to attach the stylesheet separately.
+Consume as an AMD
 
-#### With Webpack
+    require(['ample-alerts'], function (ampleAlerts) {
+        // Consume ampleAlerts
+    }
 
-    import AmpleAlerts from 'ample-alerts';
-    import from '../styles/ample-alerts.css';
+In order to use the stylesheet,
 
-You may have to use [Babel](https://babeljs.io) for ES6 transpilation.
+Import in your React components as
 
-### On the server
+    import from '[relative/path/to]/ample-alerts.css';
 
-*ample-alerts* can also be used at the server as a regular CommonJS module.
+or in your stylesheet as
 
-Install *ample-alerts* from Npm
+    @import '[relative/path/to]/ample-alerts.css';
 
-    npm install ample-alerts --save-dev
+Note: You may have to use [Babel](https://babeljs.io) for ES6 transpilation.
 
-Then `require` it as a regular CommonJS module
-
-    var ampleAlerts = require('ample-alerts');
-
-How you consume it depends upon your implementation.
-
-### Support alert types
+### Supported alert types
 
 #### Alert
 
