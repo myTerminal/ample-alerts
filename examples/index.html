@@ -11,6 +11,7 @@
         <script src="../build/scripts/ample-alerts.js"></script>
 
         <script type="text/javascript">
+         /* global ampleAlerts */
          var onAction = function (value) {
              if (value) {
                  alert('Reloading...');
@@ -25,7 +26,11 @@
          }, 1000);
 
          setTimeout(function() {
-             ampleAlerts.confirm(['Update Available', 'Do you want to refresh to load the latest version?'], onAction, ['Sure', 'Not Now']);
+             ampleAlerts.confirm(['Update Available', 'Do you want to refresh to load the latest version?'],
+                 {
+                     onAction: onAction,
+                     labels: ['Sure', 'Not Now']
+                 });
          }, 3000);
         </script>
     </body>
