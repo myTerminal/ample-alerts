@@ -91,27 +91,42 @@ You can also make the alert go away after a specified number of milliseconds.
 
 #### Confirm
 
-Shows a confirmation message for user.
+Shows a confirmation message for user to confirm an action.
 
-    ampleAlerts.confirm('An update is available! Do you want to load the latest version?', onAction);
+    ampleAlerts.confirm('An update is available! Do you want to load the latest version?', { onAction: onAction });
 
 You can also provide a heading for the confirmation message.
 
-    ampleAlerts.confirm(['Update Available', 'Do you want to load the latest version?'], onAction);
-
-You can also specify labels for buttons.
-
-    ampleAlerts.confirm(['Update Available', 'Do you want to load the latest version?'], onAction, ['Sure', 'Not now']);
+    ampleAlerts.confirm(['Update Available', 'Do you want to load the latest version?'], { onAction: onAction });
 
 #### Prompt (Still to be implemented)
 
 Shows a prompt to ask a value from the user.
 
-    ampleAlerts.prompt('What do you want to name the file as?', onAction);
+    ampleAlerts.prompt('What do you want to name the file as?', { onAction: onAction });
 
 As usual, you can also add a heading.
 
-    ampleAlerts.prompt(['Saving File', 'What do you want to name the file as?'], onAction);
+    ampleAlerts.prompt(['Saving File', 'What do you want to name the file as?'], { onAction: onAction });
+
+### Options
+
+While creating an alert, the second argument is an `options` object. It can have the following properties:
+
+1. **autoClose** (boolean)  
+*Default:* 0 (Does not close automatically)  
+*Applicable for:* `alert`
+
+2. **onAction** (function)  
+*Default:* null  
+*Applicable for:* `confirm`, `prompt`  
+The method to be called with user response as an argument.  
+In case of `confirm`, this method gets called with either `true` or `false`. For `confirm`, it gets called with the response value from the user.
+
+3. **labels** (array)  
+*Default:* ['Yes', 'No'] or ['Ok, 'Cancel']  
+*Applicable for:* `confirm`, `prompt`  
+Use this option to override button labels shown on alerts.
 
 ## Demo
 
@@ -120,4 +135,4 @@ You can view a demo [here](https://myterminal.github.io/ample-alerts/examples).
 ## To-do
 
 * Implement `prompt`
-* Unit tests
+* Write unit-tests

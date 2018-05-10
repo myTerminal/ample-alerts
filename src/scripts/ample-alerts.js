@@ -25,8 +25,8 @@ function createAlertBody(bodyText) {
 
 function createAlertControls(controlLabels) {
     return `<div class="ample-alert-controls">
-        <div class="ample-alert-control">${(controlLabels && controlLabels[0]) || 'Yes'}</div>
-        <div class="ample-alert-control">${(controlLabels && controlLabels[1]) || 'No'}</div>
+        <div class="ample-alert-control">${controlLabels[0]}</div>
+        <div class="ample-alert-control">${controlLabels[1]}</div>
     </div>`;
 }
 
@@ -80,8 +80,9 @@ function confirm(...args) {
     var text = getText(args[0]),
         headerText = text[0],
         bodyText = text[1],
-        onAction = args[1],
-        controlLabels = args[2],
+        options = args[1] || {},
+        onAction = options.onAction,
+        controlLabels = options.labels,
         controls,
         respondWithYes,
         respondWithNo,
@@ -91,7 +92,7 @@ function confirm(...args) {
     currentAlert.className = 'ample-alert confirm';
     currentAlert.innerHTML = createAlertHeader(headerText, true)
         + createAlertBody(bodyText)
-        + createAlertControls(controlLabels)
+        + createAlertControls(controlLabels || ['Yes', 'No'])
         + '<div class="clear-fix"></div>';
 
     defaults.container.appendChild(currentAlert);
