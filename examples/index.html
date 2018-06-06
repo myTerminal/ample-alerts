@@ -22,26 +22,51 @@
 
         <script type="text/javascript">
          /* global ampleAlerts */
-         var onAction = function (value) {
-             if (value) {
-                 alert('Reloading...');
-                 window.location.reload();
+
+         var askForName = function () {
+             ampleAlerts.prompt(['I need your name', 'What can I call you?'],
+                 {
+                     onAction: onReceivingName,
+                     labels: ['Note it', 'Won\'t tell you']
+                 });
+         };
+
+         var onReceivingName = function (name) {
+             if (name) {
+                 greetUser(name);
+                 promptForNameChange();
              } else {
-                 alert('Reload declined!');
+                 ampleAlerts.confirm('Is your name a secret?',
+                     {
+                         onAction: function (value) {
+                             if (value) {
+                                 ampleAlerts.alert('Ok, Stranger!', { autoClose: 5000 });
+                             } else {
+                                 askForName();
+                             }
+                         }
+                     });
              }
          };
 
-         setTimeout(function() {
-             ampleAlerts.alert(['Update Available', 'A new update is available'], { autoClose: 5000 });
-         }, 1000);
+         var greetUser = function (userName) {
+             ampleAlerts.alert('Welcome ' + userName + '!', { autoClose: 3000 });
+         };
 
-         setTimeout(function() {
-             ampleAlerts.confirm(['Update Available', 'Do you want to refresh to load the latest version?'],
-                 {
-                     onAction: onAction,
-                     labels: ['Sure', 'Not Now']
-                 });
-         }, 3000);
+         var promptForNameChange = function () {
+             setTimeout(function () {
+                 ampleAlerts.confirm('Can I call you by some other name?',
+                     {
+                         onAction: function (response) {
+                             if (response) {
+                                 askForName();
+                             }
+                         }
+                     });
+             }, 2000);
+         };
+
+         setTimeout(askForName, 1000);
         </script>
     </body>
 </html>
