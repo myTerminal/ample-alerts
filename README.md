@@ -99,7 +99,7 @@ You can also provide a heading for the confirmation message.
 
     ampleAlerts.confirm(['Update Available', 'Do you want to load the latest version?'], { onAction: onAction });
 
-#### Prompt (Still to be implemented)
+#### Prompt
 
 Shows a prompt to ask a value from the user.
 
@@ -134,5 +134,4 @@ You can view a demo [here](https://myterminal.github.io/ample-alerts/examples).
 
 ## To-do
 
-* Implement `prompt`
 * Write unit-tests

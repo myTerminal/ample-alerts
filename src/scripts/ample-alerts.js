@@ -23,6 +23,12 @@ function createAlertBody(bodyText) {
     </div>`;
 }
 
+function createAlertInputControls() {
+    return `<div class="ample-alert-input">
+        <input class="ample-alert-input-value" value="" />
+    </div>`;
+}
+
 function createAlertControls(controlLabels) {
     return `<div class="ample-alert-controls">
         <div class="ample-alert-control">${controlLabels[0]}</div>
@@ -124,8 +130,67 @@ function confirm(...args) {
     }, 50);
 }
 
-function prompt() {
-    console.error('Not yet implemented');
+function prompt(...args) {
+    var text = getText(args[0]),
+        headerText = text[0],
+        bodyText = text[1],
+        options = args[1] || {},
+        onAction = options.onAction,
+        controlLabels = options.labels,
+        controls,
+        respondWithValue,
+        dismissPrompt,
+        currentAlert;
+
+    currentAlert = document.createElement('div');
+    currentAlert.className = 'ample-alert prompt';
+    currentAlert.innerHTML = createAlertHeader(headerText, true)
+        + createAlertBody(bodyText)
+        + createAlertInputControls()
+        + createAlertControls(controlLabels || ['Yes', 'No'])
+        + '<div class="clear-fix"></div>';
+
+    defaults.container.appendChild(currentAlert);
+
+    respondWithValue = function () {
+        if (onAction) {
+            onAction(currentAlert.querySelector('.ample-alert-input-value').value);
+        }
+
+        closeAlert(currentAlert);
+    };
+
+    dismissPrompt = function () {
+        if (onAction) {
+            onAction(null);
+        }
+
+        closeAlert(currentAlert);
+    };
+
+    controls = currentAlert.querySelectorAll('.ample-alert-control');
+
+    currentAlert.querySelector('.ample-alert-input-value').onkeydown = function (e) {
+        if (e.keyCode === 13) {
+            respondWithValue();
+
+            return false;
+        }
+
+        return true;
+    };
+
+    currentAlert.querySelector('.ample-alert-close').onclick = respondWithValue;
+    controls[0].onclick = respondWithValue;
+    controls[1].onclick = dismissPrompt;
+
+    setTimeout(function () {
+        currentAlert.className += ' visible';
+    }, 50);
+
+    setTimeout(function () {
+        currentAlert.querySelector('.ample-alert-input-value').focus();
+    }, 1000);
 }
 
 export {
