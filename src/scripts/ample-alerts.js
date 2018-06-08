@@ -44,25 +44,29 @@ function getText(args) {
     }
 }
 
+function generateResponseHandler(onAction, response, alertInstance) {
+    return () => {
+        if (onAction) {
+            onAction(response.value);
+        }
+
+        closeAlert(alertInstance);
+    };
+}
+
 function closeAlert(alertDom) {
     alertDom.className += ' leaving';
-
-    setTimeout(function () {
-        alertDom.remove();
-    }, 1000);
+    setTimeout(() => { alertDom.remove(); }, 1000);
 }
 
 function alert(...args) {
-    var text = getText(args[0]),
-        headerText = text[0],
-        bodyText = text[1],
+    const text = getText(args[0]),
         options = args[1] || {},
-        currentAlert;
+        currentAlert = document.createElement('div');
 
-    currentAlert = document.createElement('div');
     currentAlert.className = 'ample-alert alert';
-    currentAlert.innerHTML = createAlertHeader(headerText, true)
-        + createAlertBody(bodyText)
+    currentAlert.innerHTML = createAlertHeader(text[0], true)
+        + createAlertBody(text[1])
         + '<div class="clear-fix"></div>';
 
     defaults.container.appendChild(currentAlert);
@@ -72,125 +76,69 @@ function alert(...args) {
     };
 
     if (options.autoClose) {
-        setTimeout(function () {
-            closeAlert(currentAlert);
-        }, options.autoClose);
+        setTimeout(() => { closeAlert(currentAlert); }, options.autoClose);
     }
 
-    setTimeout(function () {
-        currentAlert.className += ' visible';
-    }, 50);
+    setTimeout(() => { currentAlert.className += ' visible'; }, 50);
 }
 
 function confirm(...args) {
-    var text = getText(args[0]),
-        headerText = text[0],
-        bodyText = text[1],
+    const text = getText(args[0]),
         options = args[1] || {},
         onAction = options.onAction,
         controlLabels = options.labels,
-        controls,
-        respondWithYes,
-        respondWithNo,
-        currentAlert;
+        currentAlert = document.createElement('div');
 
-    currentAlert = document.createElement('div');
     currentAlert.className = 'ample-alert confirm';
-    currentAlert.innerHTML = createAlertHeader(headerText, true)
-        + createAlertBody(bodyText)
+    currentAlert.innerHTML = createAlertHeader(text[0], true)
+        + createAlertBody(text[1])
         + createAlertControls(controlLabels || ['Yes', 'No'])
         + '<div class="clear-fix"></div>';
 
     defaults.container.appendChild(currentAlert);
 
-    respondWithYes = function () {
-        if (onAction) {
-            onAction(true);
-        }
+    const controls = currentAlert.querySelectorAll('.ample-alert-control');
 
-        closeAlert(currentAlert);
-    };
+    currentAlert.querySelector('.ample-alert-close').onclick = generateResponseHandler(onAction, false, currentAlert);
+    controls[0].onclick = generateResponseHandler(onAction, { value: true }, currentAlert);
+    controls[1].onclick = generateResponseHandler(onAction, { value: false }, currentAlert);
 
-    respondWithNo = function () {
-        if (onAction) {
-            onAction(false);
-        }
-
-        closeAlert(currentAlert);
-    };
-
-    controls = currentAlert.querySelectorAll('.ample-alert-control');
-
-    currentAlert.querySelector('.ample-alert-close').onclick = respondWithNo;
-    controls[0].onclick = respondWithYes;
-    controls[1].onclick = respondWithNo;
-
-    setTimeout(function () {
-        currentAlert.className += ' visible';
-    }, 50);
+    setTimeout(() => { currentAlert.className += ' visible'; }, 50);
 }
 
 function prompt(...args) {
-    var text = getText(args[0]),
-        headerText = text[0],
-        bodyText = text[1],
+    const text = getText(args[0]),
         options = args[1] || {},
         onAction = options.onAction,
         controlLabels = options.labels,
-        controls,
-        respondWithValue,
-        dismissPrompt,
-        currentAlert;
+        currentAlert = document.createElement('div');
 
-    currentAlert = document.createElement('div');
     currentAlert.className = 'ample-alert prompt';
-    currentAlert.innerHTML = createAlertHeader(headerText, true)
-        + createAlertBody(bodyText)
+    currentAlert.innerHTML = createAlertHeader(text[0], true)
+        + createAlertBody(text[1])
         + createAlertInputControls()
         + createAlertControls(controlLabels || ['Yes', 'No'])
         + '<div class="clear-fix"></div>';
 
     defaults.container.appendChild(currentAlert);
 
-    respondWithValue = function () {
-        if (onAction) {
-            onAction(currentAlert.querySelector('.ample-alert-input-value').value);
-        }
-
-        closeAlert(currentAlert);
-    };
-
-    dismissPrompt = function () {
-        if (onAction) {
-            onAction(null);
-        }
-
-        closeAlert(currentAlert);
-    };
-
-    controls = currentAlert.querySelectorAll('.ample-alert-control');
+    const controls = currentAlert.querySelectorAll('.ample-alert-control');
 
     currentAlert.querySelector('.ample-alert-input-value').onkeydown = function (e) {
         if (e.keyCode === 13) {
-            respondWithValue();
-
+            generateResponseHandler(onAction, currentAlert.querySelector('.ample-alert-input-value'), currentAlert)();
             return false;
         }
 
         return true;
     };
 
-    currentAlert.querySelector('.ample-alert-close').onclick = respondWithValue;
-    controls[0].onclick = respondWithValue;
-    controls[1].onclick = dismissPrompt;
+    currentAlert.querySelector('.ample-alert-close').onclick = generateResponseHandler(onAction, currentAlert.querySelector('.ample-alert-input-value'), currentAlert);
+    controls[0].onclick = generateResponseHandler(onAction, currentAlert.querySelector('.ample-alert-input-value'), currentAlert);
+    controls[1].onclick = generateResponseHandler(onAction, { value: null }, currentAlert);
 
-    setTimeout(function () {
-        currentAlert.className += ' visible';
-    }, 50);
-
-    setTimeout(function () {
-        currentAlert.querySelector('.ample-alert-input-value').focus();
-    }, 1000);
+    setTimeout(() => { currentAlert.className += ' visible'; }, 50);
+    setTimeout(() => currentAlert.querySelector('.ample-alert-input-value').focus(), 1000);
 }
 
 export {
