@@ -121,7 +121,7 @@ While creating an alert, the second argument is an `options` object. It can have
 *Default:* null  
 *Applicable for:* `confirm`, `prompt`  
 The method to be called with user response as an argument.  
-In case of `confirm`, this method gets called with either `true` or `false`. For `confirm`, it gets called with the response value from the user.
+In case of `confirm`, this method gets called with either `true` or `false`. For `prompt`, it gets called with the response value from the user.
 
 3. **labels** (array)  
 *Default:* ['Yes', 'No'] or ['Ok, 'Cancel']  
