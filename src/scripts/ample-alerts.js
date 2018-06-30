@@ -117,7 +117,7 @@ function prompt(...args) {
     currentAlert.innerHTML = createAlertHeader(text[0], true)
         + createAlertBody(text[1])
         + createAlertInputControls()
-        + createAlertControls(controlLabels || ['Yes', 'No'])
+        + createAlertControls(controlLabels || ['Ok', 'Cancel'])
         + '<div class="clear-fix"></div>';
 
     defaults.container.appendChild(currentAlert);
