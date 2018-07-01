@@ -23,9 +23,9 @@ function createAlertBody(bodyText) {
     </div>`;
 }
 
-function createAlertInputControls() {
+function createAlertInputControls(defaultResponse) {
     return `<div class="ample-alert-input">
-        <input class="ample-alert-input-value" value="" />
+        <input class="ample-alert-input-value" value="${defaultResponse || ''}" />
     </div>`;
 }
 
@@ -109,6 +109,7 @@ function confirm(...args) {
 function prompt(...args) {
     const text = getText(args[0]),
         options = args[1] || {},
+        defaultResponse = options.defaultResponse,
         onAction = options.onAction,
         controlLabels = options.labels,
         currentAlert = document.createElement('div');
@@ -116,7 +117,7 @@ function prompt(...args) {
     currentAlert.className = 'ample-alert prompt';
     currentAlert.innerHTML = createAlertHeader(text[0], true)
         + createAlertBody(text[1])
-        + createAlertInputControls()
+        + createAlertInputControls(defaultResponse)
         + createAlertControls(controlLabels || ['Ok', 'Cancel'])
         + '<div class="clear-fix"></div>';
 

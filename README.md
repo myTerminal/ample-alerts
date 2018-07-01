@@ -123,7 +123,12 @@ While creating an alert, the second argument is an `options` object. It can have
 The method to be called with user response as an argument.  
 In case of `confirm`, this method gets called with either `true` or `false`. For `prompt`, it gets called with the response value from the user.
 
-3. **labels** (array)  
+3. **defaultResponse** (string)  
+*Default:* null  
+*Applicable for:* `prompt`  
+The default response from the user.
+
+4. **labels** (array)  
 *Default:* ['Yes', 'No'] or ['Ok, 'Cancel']  
 *Applicable for:* `confirm`, `prompt`  
 Use this option to override button labels shown on alerts.
