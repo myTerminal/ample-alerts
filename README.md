@@ -113,7 +113,7 @@ As usual, you can also add a heading.
 
 While creating an alert, the second argument is an `options` object. It can have the following properties:
 
-1. **autoClose** (boolean)  
+1. **autoClose** (number)  
 *Default:* 0 (Does not close automatically)  
 *Applicable for:* `alert`
 
