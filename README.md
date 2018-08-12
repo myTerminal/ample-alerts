@@ -133,6 +133,12 @@ The default response from the user.
 *Applicable for:* `confirm`, `prompt`  
 Use this option to override button labels shown on alerts.
 
+4. **isModal** (boolean)  
+*Default:* false  
+*Applicable for:* `confirm`, `prompt`  
+Use this option to make the `confirm` or `prompt` a modal.  
+Please note that the user will still be able to interact with other pop-ups created with `ample-alerts`.
+
 ## Demo
 
 You can view a demo [here](https://myterminal.github.io/ample-alerts/examples).

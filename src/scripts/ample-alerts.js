@@ -3,12 +3,14 @@
 import '../styles/ample-alerts.less';
 
 (function () {
-    document.body.innerHTML += '<div id="ample-alerts-container"></div>';
+    document.body.innerHTML += '<div id="ample-alerts-backdrop"></div><div id="ample-alerts-container"></div>';
 })();
 
 const defaults = {
     container: document.querySelector('#ample-alerts-container')
 };
+
+let modalCount = 0;
 
 function createAlertHeader(headerText, shouldHaveClose) {
     return '<div class="ample-alert-header">'
@@ -56,6 +58,15 @@ function generateResponseHandler(onAction, response, alertInstance) {
 
 function closeAlert(alertDom) {
     alertDom.className += ' leaving';
+
+    if (alertDom.className.indexOf('ample-alert-modal') > -1) {
+        modalCount -= 1;
+
+        if (!modalCount) {
+            document.body.className = document.body.className.replace(/\sample-alerts-modal-mode/g, '');
+        }
+    }
+
     setTimeout(() => { alertDom.remove(); }, 1000);
 }
 
@@ -89,7 +100,7 @@ function confirm(...args) {
         controlLabels = options.labels,
         currentAlert = document.createElement('div');
 
-    currentAlert.className = 'ample-alert confirm';
+    currentAlert.className = 'ample-alert confirm' + (options.isModal ? ' ample-alert-modal' : '');
     currentAlert.innerHTML = createAlertHeader(text[0], true)
         + createAlertBody(text[1])
         + createAlertControls(controlLabels || ['Yes', 'No'])
@@ -103,6 +114,11 @@ function confirm(...args) {
     controls[0].onclick = generateResponseHandler(onAction, { value: true }, currentAlert);
     controls[1].onclick = generateResponseHandler(onAction, { value: false }, currentAlert);
 
+    if (options.isModal) {
+        modalCount += 1;
+        document.body.className += ' ample-alerts-modal-mode';
+    }
+
     setTimeout(() => { currentAlert.className += ' visible'; }, 50);
 }
 
@@ -114,7 +130,7 @@ function prompt(...args) {
         controlLabels = options.labels,
         currentAlert = document.createElement('div');
 
-    currentAlert.className = 'ample-alert prompt';
+    currentAlert.className = 'ample-alert prompt' + (options.isModal ? ' ample-alert-modal' : '');
     currentAlert.innerHTML = createAlertHeader(text[0], true)
         + createAlertBody(text[1])
         + createAlertInputControls(defaultResponse)
@@ -137,6 +153,11 @@ function prompt(...args) {
     currentAlert.querySelector('.ample-alert-close').onclick = generateResponseHandler(onAction, currentAlert.querySelector('.ample-alert-input-value'), currentAlert);
     controls[0].onclick = generateResponseHandler(onAction, currentAlert.querySelector('.ample-alert-input-value'), currentAlert);
     controls[1].onclick = generateResponseHandler(onAction, { value: null }, currentAlert);
+
+    if (options.isModal) {
+        modalCount += 1;
+        document.body.className += ' ample-alerts-modal-mode';
+    }
 
     setTimeout(() => { currentAlert.className += ' visible'; }, 50);
     setTimeout(() => currentAlert.querySelector('.ample-alert-input-value').focus(), 1000);
