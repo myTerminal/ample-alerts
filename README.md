@@ -49,6 +49,10 @@ Consume as an ES6 module
 
 or
 
+    import ampleAlerts from 'ample-alerts';
+
+or
+
     import { alert, confirm, prompt } from 'ample-alerts';
 
 Consume as a CommonJS module

@@ -70,7 +70,7 @@ function closeAlert(alertDom) {
     setTimeout(() => { alertDom.remove(); }, 1000);
 }
 
-function alert(...args) {
+export function alert(...args) {
     const text = getText(args[0]),
         options = args[1] || {},
         currentAlert = document.createElement('div');
@@ -93,7 +93,7 @@ function alert(...args) {
     setTimeout(() => { currentAlert.className += ' visible'; }, 50);
 }
 
-function confirm(...args) {
+export function confirm(...args) {
     const text = getText(args[0]),
         options = args[1] || {},
         onAction = options.onAction,
@@ -122,7 +122,7 @@ function confirm(...args) {
     setTimeout(() => { currentAlert.className += ' visible'; }, 50);
 }
 
-function prompt(...args) {
+export function prompt(...args) {
     const text = getText(args[0]),
         options = args[1] || {},
         defaultResponse = options.defaultResponse,
@@ -163,7 +163,7 @@ function prompt(...args) {
     setTimeout(() => currentAlert.querySelector('.ample-alert-input-value').focus(), 1000);
 }
 
-export {
+export default {
     alert,
     confirm,
     prompt
