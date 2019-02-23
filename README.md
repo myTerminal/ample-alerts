@@ -149,4 +149,6 @@ You can view a demo [here](https://myterminal.github.io/ample-alerts/examples).
 
 ## To-do
 
+* Add promises support
+* Implement showing of alerts at different positions on the screen
 * Write unit-tests
