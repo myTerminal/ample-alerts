@@ -1,4 +1,4 @@
-/* global document setTimeout */
+/* global document setTimeout clearTimeout */
 
 import '../styles/ample-alerts.less';
 
@@ -33,6 +33,14 @@ function createAlertInputControls(defaultResponse) {
     return `
 <div class="ample-alert-input">
     <input class="ample-alert-input-value" value="${defaultResponse || ''}" />
+</div>
+`;
+}
+
+function createOkButton() {
+    return `
+<div class="ample-alert-controls">
+    <div class="ample-alert-control">Ok</div>
 </div>
 `;
 }
@@ -93,9 +101,14 @@ export function alert(positiveOutcome, negativeOutcome, ...args) {
     currentAlert.className = 'ample-alert alert';
     currentAlert.innerHTML = createAlertHeader(text[0], true)
         + createAlertBody(text[1])
+        + createOkButton()
         + '<div class="clear-fix"></div>';
 
     defaults.container.appendChild(currentAlert);
+
+    const okButton = currentAlert.querySelector('.ample-alert-control');
+
+    let closeTimer;
 
     currentAlert.querySelector('.ample-alert-close')
         .onclick = function () {
@@ -103,14 +116,24 @@ export function alert(positiveOutcome, negativeOutcome, ...args) {
                 negativeOutcome();
             }
 
+            clearTimeout(closeTimer);
+
             closeAlert(currentAlert);
         };
+    okButton.onclick = generateResponseHandler(
+        positiveOutcome,
+        () => {
+            clearTimeout(closeTimer);
+        },
+        { value: null },
+        currentAlert
+    );
 
     if (options.autoClose) {
-        setTimeout(
+        closeTimer = setTimeout(
             () => {
-                if (negativeOutcome) {
-                    negativeOutcome();
+                if (positiveOutcome) {
+                    positiveOutcome();
                 }
 
                 closeAlert(currentAlert);
