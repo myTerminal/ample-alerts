@@ -37,53 +37,56 @@
         <p>I'm just glad my fat, ugly mama isn't alive to see this day. Hey! I'm a porno-dealing monster, what do I care what you think? Isn't it true that you have been paid for your testimony? In our darkest hour, we can stand erect, with proud upthrust bosoms.</p>
         <p>Is today's hectic lifestyle making you tense and impatient? As an interesting side note, as a head without a body, I envy the dead. Oh Leela! You're the only person I could turn to; you're the only person who ever loved me.</p>
 
-        <script src="../build/scripts/ample-alerts.js"></script>
+        <script src="../build/scripts/ample-alerts.promises.js"></script>
 
         <script type="text/javascript">
          /* global ampleAlerts */
 
          var askForName = function () {
-             ampleAlerts.prompt(['I need your name', 'What can I call you?'],
-                 {
-                     onAction: onReceivingName,
-                     defaultResponse: 'John Doe',
-                     labels: ['Note it', 'Won\'t tell you'],
-                     isModal: true
-                 });
+             ampleAlerts
+                 .prompt(
+                     ['I need your name', 'What can I call you?'],
+                     {
+                         defaultResponse: 'John Doe',
+                         labels: ['Note it', 'Won\'t tell you'],
+                         isModal: true
+                     }
+                 )
+                 .then(onReceivingName)
+                 .catch(function () {
+                     ampleAlerts
+                         .confirm('Is your name a secret?')
+                         .then(function () {
+                             ampleAlerts.alert('Ok, Stranger!', { autoClose: 5000 });
+                         }).catch(function () {
+                             askForName();
+                         });
+                 })
          };
 
          var onReceivingName = function (name) {
-             if (name) {
-                 greetUser(name);
-                 promptForNameChange();
-             } else {
-                 ampleAlerts.confirm('Is your name a secret?',
-                     {
-                         onAction: function (value) {
-                             if (value) {
-                                 ampleAlerts.alert('Ok, Stranger!', { autoClose: 5000 });
-                             } else {
-                                 askForName();
-                             }
-                         }
-                     });
-             }
+             greetUser(name);
+             promptForNameChange();
          };
 
          var greetUser = function (userName) {
-             ampleAlerts.alert('Welcome ' + userName + '!', { autoClose: 3000 });
+             ampleAlerts
+                 .alert(
+                     'Welcome ' + userName + '!',
+                     { autoClose: 3000 }
+                 )
+                 .then(function () { /* Do nothing */ })
+                 .catch(function () { /* Do nothing */ });
          };
 
          var promptForNameChange = function () {
              setTimeout(function () {
-                 ampleAlerts.confirm('Can I call you by some other name?',
-                     {
-                         onAction: function (response) {
-                             if (response) {
-                                 askForName();
-                             }
-                         }
-                     });
+                 ampleAlerts
+                     .confirm('Can I call you by some other name?')
+                     .then(function () {
+                         askForName();
+                     })
+                     .catch(function () { /* Do nothing */ });
              }, 2000);
          };
 
