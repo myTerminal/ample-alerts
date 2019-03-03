@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ample-alerts example</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+
+        <link type="text/css" rel="stylesheet" href="../build/styles/ample-alerts.css" />
+    </head>
+    <body>
+        <h1>Hey, you add a one and two zeros to that or we walk!</h1>
+        <p>No! Don't jump! We can't compete with Mom! Her company is big and evil! Ours is small and neutral! Um, is this the boring, peaceful kind of taking to the streets? Of all the friends I've had… you're the first.</p>
+        <p>If rubbin' frozen dirt in your crotch is wrong, hey I don't wanna be right. <strong> That's not soon enough!</strong> <em> Perhaps, but perhaps your civilization is merely the sewer of an even greater society above you!</em>  I never loved you.</p>
+        <h2>Oh yeah, good luck with that.</h2>
+        <p>Michelle, I don't regret this, but I both rue and lament it. Ask her how her day was. No, of course not. It was… uh… porno. Yeah, that's it. Kif, I have mated with a woman. Inform the men.</p>
+        <ol>
+            <li>Ah, the 'Breakfast Club' soundtrack!  I can't wait til I'm old enough to feel ways about stuff!</li>
+            <li>Yep, I remember. They came in last at the Olympics, then retired to promote alcoholic beverages!</li>
+            <li>You don't know how to do any of those.</li>
+        </ol>
+        <h3>Dr. Zoidberg, that doesn't make sense. But, okay!</h3>
+        <p>No! The kind with looting and maybe starting a few fires! Morbo can't understand his teleprompter because he forgot how you say that letter that's shaped like a man wearing a hat. File not found. And remember, don't do anything that affects anything, unless it turns out you were supposed to, in which case, for the love of God, don't not do it!</p>
+        <ul>
+            <li>I just told you! You've killed me!</li>
+            <li>Oh Leela! You're the only person I could turn to; you're the only person who ever loved me.</li>
+            <li>WINDMILLS DO NOT WORK THAT WAY! GOOD NIGHT!</li>
+        </ul>
+        <p>Isn't it true that you have been paid for your testimony? Dear God, they'll be killed on our doorstep! And there's no trash pickup until January 3rd. I never loved you. I could if you hadn't turned on the light and shut off my stereo.</p>
+        <p>WINDMILLS DO NOT WORK THAT WAY! GOOD NIGHT! Eeeee!  Now say "nuclear wessels"! Throw her in the brig. You'll have all the Slurm you can drink when you're partying with Slurms McKenzie!</p>
+        <p>Morbo can't understand his teleprompter because he forgot how you say that letter that's shaped like a man wearing a hat. Does anybody else feel jealous and aroused and worried? Ooh, name it after me! Humans dating robots is sick. You people wonder why I'm still single? It's 'cause all the fine robot sisters are dating humans!</p>
+        <p>Maybe I love you so much I love you no matter who you are pretending to be. Have you ever tried just turning off the TV, sitting down with your children, and hitting them? Tell her you just want to talk. It has nothing to do with mating.</p>
+        <p>No, just a regular mistake. I've been there. My folks were always on me to groom myself and wear underpants. What am I, the pope? Ven ve voke up, ve had zese wodies. I love this planet! I've got wealth, fame, and access to the depths of sleaze that those things bring.</p>
+        <p>Bender! Ship! Stop bickering or I'm going to come back there and change your opinions manually! Kif might! There's one way and only one way to determine if an animal is intelligent. Dissect its brain! It's just like the story of the grasshopper and the octopus. All year long, the grasshopper kept burying acorns for winter, while the octopus mooched off his girlfriend and watched TV. But then the winter came, and the grasshopper died, and the octopus ate all his acorns. Also he got a race car. Is any of this getting through to you?</p>
+        <p>Hey, tell me something. You've got all this money. How come you always dress like you're doing your laundry? Perhaps, but perhaps your civilization is merely the sewer of an even greater society above you!</p>
+        <p>We'll go deliver this crate like professionals, and then we'll go home. And so we say goodbye to our beloved pet, Nibbler, who's gone to a place where I, too, hope one day to go. The toilet. Kif, I have mated with a woman. Inform the men.</p>
+        <p>You, minion. Lift my arm. AFTER HIM! Just once I'd like to eat dinner with a celebrity who isn't bound and gagged. Stop! Don't shoot fire stick in space canoe! Cause explosive decompression! Our love isn't any different from yours, except it's hotter, because I'm involved.</p>
+        <p>I'm just glad my fat, ugly mama isn't alive to see this day. Hey! I'm a porno-dealing monster, what do I care what you think? Isn't it true that you have been paid for your testimony? In our darkest hour, we can stand erect, with proud upthrust bosoms.</p>
+        <p>Is today's hectic lifestyle making you tense and impatient? As an interesting side note, as a head without a body, I envy the dead. Oh Leela! You're the only person I could turn to; you're the only person who ever loved me.</p>
+
+        <script src="../build/scripts/ample-alerts.js"></script>
+
+        <script type="text/javascript">
+         /* global ampleAlerts */
+
+         var askForName = function () {
+             ampleAlerts
+                 .prompt(
+                     ['I need your name', 'What can I call you?'],
+                     {
+                         onAction: onReceivingName,
+                         defaultResponse: 'John Doe',
+                         labels: ['Note it', 'Won\'t tell you'],
+                         isModal: true
+                     }
+                 );
+         };
+
+         var onReceivingName = function (name) {
+             if (name) {
+                 greetUser(name);
+                 promptForNameChange();
+             } else {
+                 ampleAlerts
+                     .confirm(
+                         'Is your name a secret?',
+                         {
+                             onAction: function (value) {
+                                 if (value) {
+                                     ampleAlerts.alert('Ok, Stranger!', { autoClose: 5000 });
+                                 } else {
+                                     askForName();
+                                 }
+                             }
+                         }
+                     );
+             }
+         };
+
+         var greetUser = function (userName) {
+             ampleAlerts
+                 .alert(
+                     'Welcome ' + userName + '!',
+                     { autoClose: 3000 }
+                 );
+         };
+
+         var promptForNameChange = function () {
+             setTimeout(function () {
+                 ampleAlerts
+                     .confirm(
+                         'Can I call you by some other name?',
+                         {
+                             onAction: function (response) {
+                                 if (response) {
+                                     askForName();
+                                 }
+                             }
+                         }
+                     );
+             }, 2000);
+         };
+
+         setTimeout(askForName, 1000);
+        </script>
+    </body>
+</html>
