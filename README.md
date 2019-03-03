@@ -17,8 +17,9 @@ A simple alert library for web
 
 * A simple & light-weight alert library
 * Mobile-friendly
-* Supports multiple types of alerts
+* Supports all types of browser alerts
 * Can be easily themed for any host web application
+* Now also supports promises
 
 ## How to Use
 
@@ -113,6 +114,27 @@ As usual, you can also add a heading.
 
     ampleAlerts.prompt(['Saving File', 'What do you want to name the file as?'], { onAction: onAction });
 
+### Support for promises
+
+A separate version for promises is available.
+
+In order to take advantage of promises, use `ample-alerts.promises.js`.
+
+The import path for ES6, CommonJS and AMD changes to `ample-alerts/build/scripts/ample-alerts.promises`.
+
+For any alert created with this version, all positive actions from the user `resolve` the promise while others end up `rejecting` the promise.
+
+For example: dismissing an `alert`, `confirm` or `prompt` using the close button rejects the promise so does negative response for `confirm`.
+
+*Note: You can still use the `onAction` callback with the promises version.*
+
+    ampleAlerts.confirm('Are you sure?')
+        .then(function () {
+            // User responded with a 'YES'
+        }).catch(function () {
+            // User either responded with a 'NO' or dismissed the alert
+        });
+
 ### Options
 
 While creating an alert, the second argument is an `options` object. It can have the following properties:
@@ -143,12 +165,14 @@ Use this option to override button labels shown on alerts.
 Use this option to make the `confirm` or `prompt` a modal.  
 Please note that the user will still be able to interact with other pop-ups created with `ample-alerts`.
 
-## Demo
+## Demos
 
-You can view a demo [here](https://myterminal.github.io/ample-alerts/examples).
+Experience `ample-alerts` in action:
+
+1. Simple version [here](https://myterminal.github.io/ample-alerts/examples/simple.html)
+2. Version with promises [here](https://myterminal.github.io/ample-alerts/examples/with-promises.html)
 
 ## To-do
 
-* Add promises support
 * Implement showing of alerts at different positions on the screen
 * Write unit-tests

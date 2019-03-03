@@ -1,6 +1,6 @@
 {
   "name": "ample-alerts",
-  "version": "0.14.1",
+  "version": "1.0.0",
   "description": "A simple alert library for web",
   "main": "build/scripts/ample-alerts.js",
   "scripts": {
