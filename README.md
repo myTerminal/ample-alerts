@@ -19,16 +19,17 @@ A simple alert library for web
 * Mobile-friendly
 * Supports all types of browser alerts
 * Can be easily themed for any host web application
-* Now also supports promises
+* Support for promises
+* Two color-themes: light and dark
 
 ## How to Use
 
 ### Directly from a web page
 
-One can use *ample-alerts* directly from a web-page by attaching the *ample-alerts.js* and *ample-alerts.css* to the DOM.
+One can use *ample-alerts* directly from a web-page by a attaching script file and a stylesheet to the DOM.
 
     <!-- Attaching the ample-alerts stylesheet -->
-    <link type="text/javascript" rel="stylesheet" href="path/to/library/ample-alerts.css" />
+    <link type="text/javascript" rel="stylesheet" href="path/to/library/ample-alerts.light.css" />
     
     <!-- Attaching the ample-alerts script -->
     <script type="text/javascript" src="path/to/library/ample-alerts.js"></script>
@@ -70,11 +71,11 @@ In order to use the stylesheet,
 
 Import in your React components as
 
-    import from '[relative/path/to]/ample-alerts.css';
+    import from '[relative/path/to]/ample-alerts.light.css';
 
 or in your stylesheet as
 
-    @import '[relative/path/to]/ample-alerts.css';
+    @import '[relative/path/to]/ample-alerts.light.css';
 
 Note: You may have to use [Babel](https://babeljs.io) for ES6 transpilation.
 
@@ -164,6 +165,13 @@ Use this option to override button labels shown on alerts.
 *Applicable for:* `confirm`, `prompt`  
 Use this option to make the `confirm` or `prompt` a modal.  
 Please note that the user will still be able to interact with other pop-ups created with `ample-alerts`.
+
+### Color themes
+
+There are two available stylesheets:
+
+1. `ample-alerts.light.css` for light theme
+2. `ample-alerts.dark.css` for dark theme
 
 ## Demos
 

@@ -1,6 +1,7 @@
 /* global document setTimeout clearTimeout */
 
-import '../styles/ample-alerts.less';
+import '../styles/ample-alerts.light.less';
+import '../styles/ample-alerts.dark.less';
 
 (function () {
     document.body.innerHTML += '<div id="ample-alerts-backdrop"></div><div id="ample-alerts-container"></div>';
