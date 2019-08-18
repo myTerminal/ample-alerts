@@ -3,7 +3,7 @@
 import '../styles/ample-alerts.light.less';
 import '../styles/ample-alerts.dark.less';
 
-(function () {
+(() => {
     document.body.innerHTML += '<div id="ample-alerts-backdrop"></div><div id="ample-alerts-container"></div>';
 })();
 
@@ -13,55 +13,49 @@ const defaults = {
 
 let modalCount = 0;
 
-function createAlertHeader(headerText, shouldHaveClose) {
-    return `
+const createAlertHeader = (headerText, shouldHaveClose) =>
+    `
 <div class="ample-alert-header">
     ${headerText ? `<div class="ample-alert-header-text">${headerText}</div>` : ''}
     ${shouldHaveClose ? '<div class="ample-alert-close">&#10006;</div>' : ''}
 </div>
 `;
-}
 
-function createAlertBody(bodyText) {
-    return `
+const createAlertBody = bodyText =>
+    `
 <div class="ample-alert-body">
     ${bodyText}
 </div>
 `;
-}
 
-function createAlertInputControls(defaultResponse) {
-    return `
+const createAlertInputControls = defaultResponse =>
+    `
 <div class="ample-alert-input">
     <input class="ample-alert-input-value" value="${defaultResponse || ''}" />
 </div>
 `;
-}
 
-function createOkButton() {
-    return `
+const createOkButton = () =>
+    `
 <div class="ample-alert-controls">
     <div class="ample-alert-control">Ok</div>
 </div>
 `;
-}
 
-function createAlertControls(controlLabels) {
-    return `
+const createAlertControls = controlLabels =>
+    `
 <div class="ample-alert-controls">
     <div class="ample-alert-control">${controlLabels[0]}</div>
     <div class="ample-alert-control">${controlLabels[1]}</div>
 </div>
 `;
-}
 
-function getText(args) {
-    return typeof args === 'object'
+const getText = args =>
+    (typeof args === 'object'
         ? args
-        : ['', args];
-}
+        : ['', args]);
 
-function closeAlert(alertDom) {
+const closeAlert = alertDom => {
     alertDom.className += ' leaving';
 
     if (alertDom.className.indexOf('ample-alert-modal') > -1) {
@@ -78,10 +72,10 @@ function closeAlert(alertDom) {
         },
         1000
     );
-}
+};
 
-function generateResponseHandler(outcome, onAction, response, alertInstance) {
-    return () => {
+const generateResponseHandler = (outcome, onAction, response, alertInstance) =>
+    () => {
         if (outcome) {
             outcome(response.value);
         }
@@ -92,9 +86,8 @@ function generateResponseHandler(outcome, onAction, response, alertInstance) {
 
         closeAlert(alertInstance);
     };
-}
 
-export function alert(positiveOutcome, negativeOutcome, ...args) {
+export const alert = (positiveOutcome, negativeOutcome, ...args) => {
     const text = getText(args[0]),
         options = args[1] || {},
         currentAlert = document.createElement('div');
@@ -149,12 +142,12 @@ export function alert(positiveOutcome, negativeOutcome, ...args) {
         },
         50
     );
-}
+};
 
-export function confirm(positiveOutcome, negativeOutcome, ...args) {
+export const confirm = (positiveOutcome, negativeOutcome, ...args) => {
     const text = getText(args[0]),
         options = args[1] || {},
-        onAction = options.onAction,
+        { onAction } = options,
         controlLabels = options.labels,
         currentAlert = document.createElement('div');
 
@@ -199,17 +192,16 @@ export function confirm(positiveOutcome, negativeOutcome, ...args) {
         },
         50
     );
-}
+};
 
-export function prompt(positiveOutcome, negativeOutcome, ...args) {
+export const prompt = (positiveOutcome, negativeOutcome, ...args) => {
     const text = getText(args[0]),
         options = args[1] || {},
-        defaultResponse = options.defaultResponse,
-        onAction = options.onAction,
+        { defaultResponse, onAction } = options,
         controlLabels = options.labels,
         currentAlert = document.createElement('div');
 
-    currentAlert.className = 'ample-alert prompt' + (options.isModal ? ' ample-alert-modal' : '');
+    currentAlert.className = `ample-alert prompt${(options.isModal ? ' ample-alert-modal' : '')}`;
     currentAlert.innerHTML = createAlertHeader(text[0], true)
         + createAlertBody(text[1])
         + createAlertInputControls(defaultResponse)
@@ -271,4 +263,4 @@ export function prompt(positiveOutcome, negativeOutcome, ...args) {
         () => currentAlert.querySelector('.ample-alert-input-value').focus(),
         1000
     );
-}
+};
