@@ -21,8 +21,8 @@ const optimizeCSS = new OptimizeCssAssetsPlugin();
 module.exports = {
     mode: 'development',
     entry: {
-        [libraryFileName]: './' + sourceDir + '/scripts/' + 'simple' + '.js',
-        [libraryFileName + '.promises']: './' + sourceDir + '/scripts/' + 'with-promises' + '.js'
+        [libraryFileName]: `./${sourceDir}/scripts/simple.js`,
+        [`${libraryFileName}.promises`]: `./${sourceDir}/scripts/with-promises.js`
     },
     module: {
         rules: [
