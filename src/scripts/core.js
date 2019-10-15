@@ -100,15 +100,12 @@ const focusInputWithDelay = currentAlert => {
 };
 
 export const alert = (positiveOutcome, negativeOutcome, ...args) => {
-    const text = getText(args[0]),
-        options = args[1] || {},
+    const { title, text } = getText(args[0]),
+        { autoClose } = args[1] || {},
         currentAlert = document.createElement('div');
 
     currentAlert.className = 'ample-alert alert';
-    currentAlert.innerHTML = createAlertHeader(text[0], true)
-        + createAlertBody(text[1])
-        + createOkButton()
-        + '<div class="clear-fix"></div>';
+    currentAlert.innerHTML = `${createAlertHeader(title, true)}${createAlertBody(text)}${createOkButton()}<div class="clear-fix"></div>`;
 
     defaults.container.appendChild(currentAlert);
 
@@ -133,7 +130,7 @@ export const alert = (positiveOutcome, negativeOutcome, ...args) => {
         () => { clearTimeout(closeTimer); }
     );
 
-    if (options.autoClose) {
+    if (autoClose) {
         closeTimer = setTimeout(
             () => {
                 if (positiveOutcome) {
@@ -142,7 +139,7 @@ export const alert = (positiveOutcome, negativeOutcome, ...args) => {
 
                 closeAlert(currentAlert);
             },
-            options.autoClose
+            autoClose
         );
     }
 
@@ -150,17 +147,12 @@ export const alert = (positiveOutcome, negativeOutcome, ...args) => {
 };
 
 export const confirm = (positiveOutcome, negativeOutcome, ...args) => {
-    const text = getText(args[0]),
-        options = args[1] || {},
-        { onAction } = options,
-        controlLabels = options.labels,
+    const { title, text } = getText(args[0]),
+        { onAction, labels, isModal } = args[1] || {},
         currentAlert = document.createElement('div');
 
-    currentAlert.className = `ample-alert confirm'${(options.isModal ? ' ample-alert-modal' : '')}`;
-    currentAlert.innerHTML = createAlertHeader(text[0], true)
-        + createAlertBody(text[1])
-        + createAlertControls(controlLabels || ['Yes', 'No'])
-        + '<div class="clear-fix"></div>';
+    currentAlert.className = `ample-alert confirm'${(isModal ? ' ample-alert-modal' : '')}`;
+    currentAlert.innerHTML = `${createAlertHeader(title, true)}${createAlertBody(text)}${createAlertControls(labels || ['Yes', 'No'])}<div class="clear-fix"></div>`;
 
     defaults.container.appendChild(currentAlert);
 
@@ -170,10 +162,9 @@ export const confirm = (positiveOutcome, negativeOutcome, ...args) => {
         .onclick = createHandler(currentAlert, { value: false }, negativeOutcome, onAction);
 
     controls[0].onclick = createHandler(currentAlert, { value: true }, positiveOutcome, onAction);
-
     controls[1].onclick = createHandler(currentAlert, { value: false }, negativeOutcome, onAction);
 
-    if (options.isModal) {
+    if (isModal) {
         modalCount += 1;
         document.body.className += ' ample-alerts-modal-mode';
     }
@@ -182,18 +173,14 @@ export const confirm = (positiveOutcome, negativeOutcome, ...args) => {
 };
 
 export const prompt = (positiveOutcome, negativeOutcome, ...args) => {
-    const text = getText(args[0]),
-        options = args[1] || {},
-        { defaultResponse, onAction } = options,
-        controlLabels = options.labels,
+    const { title, text } = getText(args[0]),
+        {
+            onAction, defaultResponse, labels, isModal
+        } = args[1] || {},
         currentAlert = document.createElement('div');
 
-    currentAlert.className = `ample-alert prompt${(options.isModal ? ' ample-alert-modal' : '')}`;
-    currentAlert.innerHTML = createAlertHeader(text[0], true)
-        + createAlertBody(text[1])
-        + createAlertInputControls(defaultResponse)
-        + createAlertControls(controlLabels || ['Ok', 'Cancel'])
-        + '<div class="clear-fix"></div>';
+    currentAlert.className = `ample-alert prompt${(isModal ? ' ample-alert-modal' : '')}`;
+    currentAlert.innerHTML = `${createAlertHeader(title, true)}${createAlertBody(text)}${createAlertInputControls(defaultResponse)}${createAlertControls(labels || ['Ok', 'Cancel'])}<div class="clear-fix"></div>`;
 
     defaults.container.appendChild(currentAlert);
 
@@ -203,7 +190,6 @@ export const prompt = (positiveOutcome, negativeOutcome, ...args) => {
         .onkeydown = e => {
             if (e.keyCode === 13) {
                 createHandler(currentAlert, currentAlert.querySelector('.ample-alert-input-value'), positiveOutcome, onAction)();
-
                 return false;
             }
 
@@ -214,10 +200,9 @@ export const prompt = (positiveOutcome, negativeOutcome, ...args) => {
         .onclick = createHandler(currentAlert, { value: null }, negativeOutcome, onAction);
 
     controls[0].onclick = createHandler(currentAlert, currentAlert.querySelector('.ample-alert-input-value'), positiveOutcome, onAction);
-
     controls[1].onclick = createHandler(currentAlert, { value: null }, negativeOutcome, onAction);
 
-    if (options.isModal) {
+    if (isModal) {
         modalCount += 1;
         document.body.className += ' ample-alerts-modal-mode';
     }
