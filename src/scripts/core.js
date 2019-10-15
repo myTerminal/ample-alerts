@@ -72,7 +72,7 @@ const closeAlert = alertDom => {
     );
 };
 
-const generateResponseHandler = (outcome, onAction, response, alertInstance) =>
+const createHandler = (alertInstance, response, outcome, onAction) =>
     () => {
         if (outcome) {
             outcome(response.value);
@@ -126,11 +126,11 @@ export const alert = (positiveOutcome, negativeOutcome, ...args) => {
             closeAlert(currentAlert);
         };
 
-    okButton.onclick = generateResponseHandler(
-        positiveOutcome,
-        () => { clearTimeout(closeTimer); },
+    okButton.onclick = createHandler(
+        currentAlert,
         { value: null },
-        currentAlert
+        positiveOutcome,
+        () => { clearTimeout(closeTimer); }
     );
 
     if (options.autoClose) {
@@ -156,7 +156,7 @@ export const confirm = (positiveOutcome, negativeOutcome, ...args) => {
         controlLabels = options.labels,
         currentAlert = document.createElement('div');
 
-    currentAlert.className = 'ample-alert confirm' + (options.isModal ? ' ample-alert-modal' : '');
+    currentAlert.className = `ample-alert confirm'${(options.isModal ? ' ample-alert-modal' : '')}`;
     currentAlert.innerHTML = createAlertHeader(text[0], true)
         + createAlertBody(text[1])
         + createAlertControls(controlLabels || ['Yes', 'No'])
@@ -167,26 +167,11 @@ export const confirm = (positiveOutcome, negativeOutcome, ...args) => {
     const controls = currentAlert.querySelectorAll('.ample-alert-control');
 
     currentAlert.querySelector('.ample-alert-close')
-        .onclick = generateResponseHandler(
-            negativeOutcome,
-            onAction,
-            { value: false },
-            currentAlert
-        );
+        .onclick = createHandler(currentAlert, { value: false }, negativeOutcome, onAction);
 
-    controls[0].onclick = generateResponseHandler(
-        positiveOutcome,
-        onAction,
-        { value: true },
-        currentAlert
-    );
+    controls[0].onclick = createHandler(currentAlert, { value: true }, positiveOutcome, onAction);
 
-    controls[1].onclick = generateResponseHandler(
-        negativeOutcome,
-        onAction,
-        { value: false },
-        currentAlert
-    );
+    controls[1].onclick = createHandler(currentAlert, { value: false }, negativeOutcome, onAction);
 
     if (options.isModal) {
         modalCount += 1;
@@ -217,12 +202,7 @@ export const prompt = (positiveOutcome, negativeOutcome, ...args) => {
     currentAlert.querySelector('.ample-alert-input-value')
         .onkeydown = e => {
             if (e.keyCode === 13) {
-                generateResponseHandler(
-                    positiveOutcome,
-                    onAction,
-                    currentAlert.querySelector('.ample-alert-input-value'),
-                    currentAlert
-                )();
+                createHandler(currentAlert, currentAlert.querySelector('.ample-alert-input-value'), positiveOutcome, onAction)();
 
                 return false;
             }
@@ -231,26 +211,11 @@ export const prompt = (positiveOutcome, negativeOutcome, ...args) => {
         };
 
     currentAlert.querySelector('.ample-alert-close')
-        .onclick = generateResponseHandler(
-            negativeOutcome,
-            onAction,
-            { value: null },
-            currentAlert
-        );
+        .onclick = createHandler(currentAlert, { value: null }, negativeOutcome, onAction);
 
-    controls[0].onclick = generateResponseHandler(
-        positiveOutcome,
-        onAction,
-        currentAlert.querySelector('.ample-alert-input-value'),
-        currentAlert
-    );
+    controls[0].onclick = createHandler(currentAlert, currentAlert.querySelector('.ample-alert-input-value'), positiveOutcome, onAction);
 
-    controls[1].onclick = generateResponseHandler(
-        negativeOutcome,
-        onAction,
-        { value: null },
-        currentAlert
-    );
+    controls[1].onclick = createHandler(currentAlert, { value: null }, negativeOutcome, onAction);
 
     if (options.isModal) {
         modalCount += 1;
