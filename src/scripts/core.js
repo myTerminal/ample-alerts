@@ -67,9 +67,7 @@ const closeAlert = alertDom => {
     }
 
     setTimeout(
-        () => {
-            alertDom.remove();
-        },
+        () => { alertDom.remove(); },
         1000
     );
 };
@@ -86,6 +84,20 @@ const generateResponseHandler = (outcome, onAction, response, alertInstance) =>
 
         closeAlert(alertInstance);
     };
+
+const makeVisibleWithDelay = currentAlert => {
+    setTimeout(
+        () => { currentAlert.className += ' visible'; },
+        50
+    );
+};
+
+const focusInputWithDelay = currentAlert => {
+    setTimeout(
+        () => { currentAlert.querySelector('.ample-alert-input-value').focus(); },
+        1000
+    );
+};
 
 export const alert = (positiveOutcome, negativeOutcome, ...args) => {
     const text = getText(args[0]),
@@ -105,20 +117,18 @@ export const alert = (positiveOutcome, negativeOutcome, ...args) => {
     let closeTimer;
 
     currentAlert.querySelector('.ample-alert-close')
-        .onclick = function () {
+        .onclick = () => {
             if (negativeOutcome) {
                 negativeOutcome();
             }
 
             clearTimeout(closeTimer);
-
             closeAlert(currentAlert);
         };
+
     okButton.onclick = generateResponseHandler(
         positiveOutcome,
-        () => {
-            clearTimeout(closeTimer);
-        },
+        () => { clearTimeout(closeTimer); },
         { value: null },
         currentAlert
     );
@@ -136,12 +146,7 @@ export const alert = (positiveOutcome, negativeOutcome, ...args) => {
         );
     }
 
-    setTimeout(
-        () => {
-            currentAlert.className += ' visible';
-        },
-        50
-    );
+    makeVisibleWithDelay(currentAlert);
 };
 
 export const confirm = (positiveOutcome, negativeOutcome, ...args) => {
@@ -168,12 +173,14 @@ export const confirm = (positiveOutcome, negativeOutcome, ...args) => {
             { value: false },
             currentAlert
         );
+
     controls[0].onclick = generateResponseHandler(
         positiveOutcome,
         onAction,
         { value: true },
         currentAlert
     );
+
     controls[1].onclick = generateResponseHandler(
         negativeOutcome,
         onAction,
@@ -186,12 +193,7 @@ export const confirm = (positiveOutcome, negativeOutcome, ...args) => {
         document.body.className += ' ample-alerts-modal-mode';
     }
 
-    setTimeout(
-        () => {
-            currentAlert.className += ' visible';
-        },
-        50
-    );
+    makeVisibleWithDelay(currentAlert);
 };
 
 export const prompt = (positiveOutcome, negativeOutcome, ...args) => {
@@ -213,7 +215,7 @@ export const prompt = (positiveOutcome, negativeOutcome, ...args) => {
     const controls = currentAlert.querySelectorAll('.ample-alert-control');
 
     currentAlert.querySelector('.ample-alert-input-value')
-        .onkeydown = function (e) {
+        .onkeydown = e => {
             if (e.keyCode === 13) {
                 generateResponseHandler(
                     positiveOutcome,
@@ -235,12 +237,14 @@ export const prompt = (positiveOutcome, negativeOutcome, ...args) => {
             { value: null },
             currentAlert
         );
+
     controls[0].onclick = generateResponseHandler(
         positiveOutcome,
         onAction,
         currentAlert.querySelector('.ample-alert-input-value'),
         currentAlert
     );
+
     controls[1].onclick = generateResponseHandler(
         negativeOutcome,
         onAction,
@@ -253,14 +257,6 @@ export const prompt = (positiveOutcome, negativeOutcome, ...args) => {
         document.body.className += ' ample-alerts-modal-mode';
     }
 
-    setTimeout(
-        () => {
-            currentAlert.className += ' visible';
-        },
-        50
-    );
-    setTimeout(
-        () => currentAlert.querySelector('.ample-alert-input-value').focus(),
-        1000
-    );
+    makeVisibleWithDelay(currentAlert);
+    focusInputWithDelay(currentAlert);
 };
