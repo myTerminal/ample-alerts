@@ -100,7 +100,7 @@ const focusInputWithDelay = currentAlert => {
 };
 
 export const alert = (positiveOutcome, negativeOutcome, ...args) => {
-    const { title, text } = getText(args[0]),
+    const [title, text] = getText(args[0]),
         { autoClose } = args[1] || {},
         currentAlert = document.createElement('div');
 
@@ -147,7 +147,7 @@ export const alert = (positiveOutcome, negativeOutcome, ...args) => {
 };
 
 export const confirm = (positiveOutcome, negativeOutcome, ...args) => {
-    const { title, text } = getText(args[0]),
+    const [title, text] = getText(args[0]),
         { onAction, labels, isModal } = args[1] || {},
         currentAlert = document.createElement('div');
 
@@ -173,7 +173,7 @@ export const confirm = (positiveOutcome, negativeOutcome, ...args) => {
 };
 
 export const prompt = (positiveOutcome, negativeOutcome, ...args) => {
-    const { title, text } = getText(args[0]),
+    const [title, text] = getText(args[0]),
         {
             onAction, defaultResponse, labels, isModal
         } = args[1] || {},
