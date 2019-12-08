@@ -175,6 +175,20 @@ There are two available color themes: *light* and *dark* and the default is *lig
         ...
     </body>
 
+To switch the theme dynamically, call one of the below two functions.
+
+    import { switchToDarkTheme, switchToLightTheme } from 'ample-alerts';
+
+    switchToDarkTheme(); // Switches to dark theme
+    switchToLightTheme(); // Switches to light theme
+
+OR
+
+    import ampleAlerts from 'ample-alerts';
+
+    amplerAlerts.switchToDarkTheme(); // Switches to dark theme
+    amplerAlerts.switchToLightTheme(); // Switches to light theme
+
 ## Demos
 
 Experience `ample-alerts` in action:

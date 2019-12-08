@@ -1,7 +1,9 @@
 import {
     alert as alert_,
     confirm as confirm_,
-    prompt as prompt_
+    prompt as prompt_,
+    switchToDarkTheme,
+    switchToLightTheme
 } from './core.js';
 
 export const alert = (...args) => {
@@ -16,8 +18,15 @@ export const prompt = (...args) => {
     prompt_(null, null, ...args);
 };
 
+export {
+    switchToDarkTheme,
+    switchToLightTheme
+};
+
 export default {
     alert,
     confirm,
-    prompt
+    prompt,
+    switchToDarkTheme,
+    switchToLightTheme
 };

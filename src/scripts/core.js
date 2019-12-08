@@ -98,6 +98,22 @@ const focusInputWithDelay = currentAlert => {
     );
 };
 
+export const switchToDarkTheme = () => {
+    const isDarkThemeEnabled = document.body.className.indexOf('ample-alerts-dark') > -1;
+
+    if (!isDarkThemeEnabled) {
+        document.body.className += ' ample-alerts-dark';
+    }
+};
+
+export const switchToLightTheme = () => {
+    const isDarkThemeEnabled = document.body.className.indexOf('ample-alerts-dark') > -1;
+
+    if (isDarkThemeEnabled) {
+        document.body.className = document.body.className.replace('ample-alerts-dark', '');
+    }
+};
+
 export const alert = (positiveOutcome, negativeOutcome, ...args) => {
     const [title, text] = getText(args[0]),
         { autoClose } = args[1] || {},
