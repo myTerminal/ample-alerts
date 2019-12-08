@@ -30,7 +30,7 @@ A simple alert library for web
 One can use *ample-alerts* directly from a web-page by a attaching script file and a stylesheet to the DOM.
 
     <!-- Attaching the ample-alerts stylesheet -->
-    <link type="text/javascript" rel="stylesheet" href="path/to/library/ample-alerts.light.css" />
+    <link type="text/javascript" rel="stylesheet" href="path/to/library/ample-alerts.css" />
     
     <!-- Attaching the ample-alerts script -->
     <script type="text/javascript" src="path/to/library/ample-alerts.js"></script>
@@ -72,11 +72,11 @@ In order to use the stylesheet,
 
 Import in your React components as
 
-    import from '[relative/path/to]/ample-alerts.light.css';
+    import from '[relative/path/to]/ample-alerts.css';
 
 or in your stylesheet as
 
-    @import '[relative/path/to]/ample-alerts.light.css';
+    @import '[relative/path/to]/ample-alerts.css';
 
 Note: You may have to use [Babel](https://babeljs.io) for ES6 transpilation.
 
@@ -169,10 +169,11 @@ Please note that the user will still be able to interact with other pop-ups crea
 
 ### Color themes
 
-There are two available stylesheets:
+There are two available color themes: *light* and *dark* and the default is *light*. In order for *ample-alerts* to use the *dark* theme, attach a CSS class named `ample-alerts-dark` to the `body` tag.
 
-1. `ample-alerts.light.css` for light theme
-2. `ample-alerts.dark.css` for dark theme
+    <body class="ample-alerts-dark">
+        ...
+    </body>
 
 ## Demos
 

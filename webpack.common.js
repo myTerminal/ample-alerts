@@ -14,8 +14,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const clean = new CleanWebpackPlugin([outputDir]);
-const extractCSSLight = new ExtractTextPlugin('styles/' + libraryFileName + '.light.css');
-const extractCSSDark = new ExtractTextPlugin('styles/' + libraryFileName + '.dark.css');
+const extractCSS = new ExtractTextPlugin(`styles/${libraryFileName}.css`);
 const optimizeCSS = new OptimizeCssAssetsPlugin();
 
 module.exports = {
@@ -37,22 +36,8 @@ module.exports = {
                 }
             },
             {
-                test: /light\.(less|css)$/,
-                use: extractCSSLight.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        {
-                            loader: 'css-loader'
-                        },
-                        {
-                            loader: 'less-loader'
-                        }
-                    ]
-                })
-            },
-            {
-                test: /dark\.(less|css)$/,
-                use: extractCSSDark.extract({
+                test: /\.(less|css)$/,
+                use: extractCSS.extract({
                     fallback: 'style-loader',
                     use: [
                         {
@@ -79,8 +64,7 @@ module.exports = {
     },
     plugins: [
         clean,
-        extractCSSLight,
-        extractCSSDark,
+        extractCSS,
         optimizeCSS
     ],
     output: {
