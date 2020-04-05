@@ -1,9 +1,27 @@
-/* global document setTimeout clearTimeout */
+/* global document window setTimeout clearTimeout */
 
 import '../styles/ample-alerts.less';
 
 (() => {
+    // Setup for backdrop
     document.body.innerHTML += '<div id="ample-alerts-backdrop"></div><div id="ample-alerts-container"></div>';
+
+    // Central event handler to detect any click on the body
+    document.querySelector('#ample-alerts-backdrop').addEventListener(
+        'click',
+        event => {
+            // Add class 'ample-alerts-nudge'
+            document.body.className = `${document.body.className.replace(/ ample-alerts-nudge/g, '')} ample-alerts-nudge`;
+
+            // Remove class 'ample-alerts-nudge' after some time
+            window.setTimeout(
+                () => {
+                    document.body.className = document.body.className.replace(/ ample-alerts-nudge/g, '');
+                },
+                500
+            );
+        }
+    );
 })();
 
 const defaults = {
