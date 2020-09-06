@@ -1,4 +1,4 @@
-/* global document window setTimeout clearTimeout */
+/* global document setTimeout clearTimeout */
 
 import '../styles/ample-alerts.less';
 
@@ -14,7 +14,7 @@ import '../styles/ample-alerts.less';
             document.body.className = `${document.body.className.replace(/ ample-alerts-nudge/g, '')} ample-alerts-nudge`;
 
             // Remove class 'ample-alerts-nudge' after some time
-            window.setTimeout(
+            setTimeout(
                 () => {
                     document.body.className = document.body.className.replace(/ ample-alerts-nudge/g, '');
                 },
