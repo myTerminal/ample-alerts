@@ -1,15 +1,12 @@
 # ample-alerts
 
 [![npm version](https://badge.fury.io/js/ample-alerts.svg)](https://badge.fury.io/js/ample-alerts)
-[![npm downloads](https://img.shields.io/npm/dt/ample-alerts.svg)](https://www.npmjs.com/package/ample-alerts)  
+[![npm downloads](https://img.shields.io/npm/dt/ample-alerts.svg)](https://www.npmjs.com/package/ample-alerts)
+[![License](https://img.shields.io/github/license/myTerminal/ample-alerts.svg)](https://opensource.org/licenses/MIT)  
 [![Build Status](https://travis-ci.org/myTerminal/ample-alerts.svg?branch=master)](https://travis-ci.org/myTerminal/ample-alerts)
 [![Code Climate](https://codeclimate.com/github/myTerminal/ample-alerts.png)](https://codeclimate.com/github/myTerminal/ample-alerts)
 [![js-myterminal-style](https://img.shields.io/badge/code%20style-myterminal-blue.svg)](https://www.npmjs.com/package/eslint-config/myterminal)
 [![Coverage Status](https://img.shields.io/coveralls/myTerminal/ample-alerts.svg)](https://coveralls.io/r/myTerminal/ample-alerts?branch=master)  
-[![Dependency Status](https://david-dm.org/myTerminal/ample-alerts.svg)](https://david-dm.org/myTerminal/ample-alerts)
-[![devDependency Status](https://david-dm.org/myTerminal/ample-alerts/dev-status.svg)](https://david-dm.org/myTerminal/ample-alerts#info=devDependencies)
-[![peer Dependency Status](https://david-dm.org/myTerminal/ample-alerts/peer-status.svg)](https://david-dm.org/myTerminal/ample-alerts#info=peerDependencies)  
-[![License](https://img.shields.io/github/license/myTerminal/ample-alerts.svg)](https://opensource.org/licenses/MIT)  
 [![NPM](https://nodei.co/npm/ample-alerts.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ample-alerts/)
 
 A simple alert library for web
